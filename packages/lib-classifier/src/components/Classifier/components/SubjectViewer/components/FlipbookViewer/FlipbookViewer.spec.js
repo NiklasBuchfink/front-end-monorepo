@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react'
 import { expect } from 'chai'
 import Meta, { Default, NoSubject } from './FlipbookViewer.stories'
-import { composeStory } from '@storybook/testing-react'
+import { composeStory } from '@storybook/react'
 import userEvent from '@testing-library/user-event'
-import * as globalConfig from '../../../../../../../.storybook/preview'
+import projectAnnotations from '../../../../../../../.storybook/preview'
 
 describe('Component > FlipbookViewer', function () {
-  const DefaultStory = composeStory(Default, Meta, globalConfig)
+  const DefaultStory = composeStory(Default, Meta, projectAnnotations)
 
   describe('with a valid subject', function () {
     it('should render the correct number of thumbnnails', function () {
@@ -63,7 +63,7 @@ describe('Component > FlipbookViewer', function () {
   })
 
   describe('without a subject', function () {
-    const NoSubjectStory = composeStory(NoSubject, Meta, globalConfig)
+    const NoSubjectStory = composeStory(NoSubject, Meta, projectAnnotations)
 
     it('should display an error message and no image element ', function () {
       const { container } = render(<NoSubjectStory />)
@@ -97,8 +97,8 @@ describe('Component > FlipbookViewer', function () {
 
     it('should change the looping speed', async function () {
       const user = userEvent.setup({ delay: null })
-      const { getByLabelText, getByRole } = render(<DefaultStory />)
-      const speedButton = getByLabelText(
+      const { findByLabelText, findByRole } = render(<DefaultStory />)
+      const speedButton = await findByLabelText(
         'SubjectViewer.VideoController.playbackSpeed; Selected: 1x'
       )
 
@@ -107,7 +107,7 @@ describe('Component > FlipbookViewer', function () {
         target: speedButton
       })
 
-      const selectedSpeed = getByRole('option', { name: '1x' })
+      const selectedSpeed = await findByRole('option', { name: '1x' })
       expect(selectedSpeed.selected).to.be.true()
 
       /** The following is the correct way to test with RTL

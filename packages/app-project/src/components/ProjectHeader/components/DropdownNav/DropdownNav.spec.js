@@ -1,6 +1,4 @@
-import zooTheme from '@zooniverse/grommet-theme'
-import { Grommet } from 'grommet'
-import { composeStories } from '@storybook/testing-react'
+import { composeStories } from '@storybook/react'
 import { within } from '@testing-library/dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -33,7 +31,7 @@ describe('Component > ProjectHeader > Dropdown Nav', function () {
       render(<Default />)
       dropdownButton = screen.queryByRole('button', { name: 'ProjectHeader.exploreProject' })
       await user.click(dropdownButton)
-      navMenu = screen.getByRole('navigation', { name: 'ProjectHeader.ProjectNav.ariaLabel' })
+      navMenu = await screen.findByRole('navigation', { name: 'ProjectHeader.ProjectNav.ariaLabel' })
     })
 
     it('should show the menu button', function () {
@@ -62,7 +60,7 @@ describe('Component > ProjectHeader > Dropdown Nav', function () {
       render(<LoggedIn />)
       dropdownButton = screen.queryByRole('button', { name: 'ProjectHeader.exploreProject' })
       await user.click(dropdownButton)
-      navMenu = screen.getByRole('navigation', { name: 'ProjectHeader.ProjectNav.ariaLabel' })
+      navMenu = await screen.findByRole('navigation', { name: 'ProjectHeader.ProjectNav.ariaLabel' })
     })
 
     it('should show the menu button', function () {
@@ -89,7 +87,7 @@ describe('Component > ProjectHeader > Dropdown Nav', function () {
       render(<AdminMode />)
       dropdownButton = screen.queryByRole('button', { name: 'ProjectHeader.exploreProject' })
       await user.click(dropdownButton)
-      navMenu = screen.getByRole('navigation', { name: 'ProjectHeader.ProjectNav.ariaLabel' })
+      navMenu = await screen.findByRole('navigation', { name: 'ProjectHeader.ProjectNav.ariaLabel' })
     })
 
     it('should show the menu button', function () {

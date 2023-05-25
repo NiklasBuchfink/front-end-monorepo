@@ -4,7 +4,6 @@ if (process.env.NEWRELIC_LICENSE_KEY) {
 
 const { execSync } = require('child_process')
 const path = require('path')
-const withSourceMaps = require('@zeit/next-source-maps')()
 const { i18n } = require('./next-i18next.config')
 
 const talkHosts = require('./config/talkHosts')
@@ -26,8 +25,9 @@ const APP_ENV = process.env.APP_ENV || 'development'
 const COMMIT_ID = process.env.COMMIT_ID || commitID()
 const assetPrefix = assetPrefixes[APP_ENV]
 const TALK_HOST = talkHosts[PANOPTES_ENV]
+const GITHUB_REF_NAME = process.env.GITHUB_REF_NAME
 
-console.info({ APP_ENV, PANOPTES_ENV, TALK_HOST, assetPrefix })
+console.info({ GITHUB_REF_NAME, APP_ENV, PANOPTES_ENV, TALK_HOST, assetPrefix })
 
 const nextConfig = {
   assetPrefix,
@@ -40,6 +40,7 @@ const nextConfig = {
   compress: false,
 
   env: {
+    GITHUB_REF_NAME,
     COMMIT_ID,
     PANOPTES_ENV,
     SENTRY_PROJECT_DSN,
@@ -104,4 +105,4 @@ const nextConfig = {
   }
 }
 
-module.exports = withSourceMaps(nextConfig)
+module.exports = nextConfig
